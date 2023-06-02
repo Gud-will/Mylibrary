@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mylibrary/ui/textboxwithplaceholder.dart';
 import 'package:mylibrary/ui/uicolors.dart';
 
 class BookInfoCard extends StatelessWidget {
@@ -10,9 +11,11 @@ class BookInfoCard extends StatelessWidget {
       width: 400,
       height: 500,
       margin: const EdgeInsets.only(top: 130),
-      padding: const EdgeInsets.symmetric(
-        horizontal: 10,
-        vertical: 5,
+      padding: const EdgeInsets.only(
+        top: 130,
+        bottom: 10,
+        right: 10,
+        left: 10,
       ),
       constraints: const BoxConstraints(
         maxWidth: 500,
@@ -20,20 +23,24 @@ class BookInfoCard extends StatelessWidget {
       ),
       decoration: cardDecorations,
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
-          children: const [
-             Text(
-                "Title:",
-                textAlign: TextAlign.left,
-              ), Text(
-                "Harry potter",
-                textAlign: TextAlign.right,
-              ),
-          ],),
+          TextBoxWthPlaceHolder(
+            placeholder: "Title",
+            placeholdervalue: "Harry Potter and the chamber of secrets",
+          ),
+          TextBoxWthPlaceHolder(
+            placeholder: "Title",
+            placeholdervalue: "Harry Potter and the chamber of secrets",
+          ),
+          TextBoxWthPlaceHolder(
+            placeholder: "Title",
+            placeholdervalue: "Harry Potter and the chamber of secrets",
+          ),
         ],
       ),
     );
   }
 }
+

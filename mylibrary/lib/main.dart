@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:mylibrary/ui/bookinfocard.dart';
-import 'package:mylibrary/ui/imageholder.dart';
+import 'package:mylibrary/ui/bookcard.dart';
 import 'package:mylibrary/ui/uicolors.dart';
+import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 void main() {
   runApp(const MyApp());
@@ -31,29 +31,97 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  final PageController pgcontroller = PageController(viewportFraction: 0.8);
+  int selectedPg = 0;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       extendBody: true,
       backgroundColor: Colors.transparent,
       body: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 15,vertical: 25),
         width: MediaQuery.of(context).size.width,
+        padding: const EdgeInsets.only(top: 10, bottom: 20),
         height: MediaQuery.of(context).size.height,
         decoration: bgcolor,
-        child: Align(
-          alignment: Alignment.bottomCenter,
-          child: SizedBox(
-            width: MediaQuery.of(context).size.width,
-            height: 600,
-            child: Stack(
-              alignment: AlignmentDirectional.topCenter,
-              children: const [
-                BookInfoCard(),
-                Imageholder(),
-              ],
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            SizedBox(
+              width: MediaQuery.of(context).size.width,
+              height: 600,
+              child: PageView(
+                pageSnapping: false,
+                controller: pgcontroller,
+                children: [
+                  BookCard(),
+                  BookCard(),
+                  BookCard(),
+                  BookCard(),
+                  BookCard(),
+                  BookCard(),
+                  BookCard(),
+                  BookCard(),
+                  BookCard(),
+                  BookCard(),
+                  BookCard(),
+                  BookCard(),
+                  BookCard(),
+                  BookCard(),
+                  BookCard(),
+                  BookCard(),
+                  BookCard(),
+                  BookCard(),
+                  BookCard(),
+                  BookCard(),
+                  BookCard(),
+                  BookCard(),
+                  BookCard(),
+                  BookCard(),
+                  BookCard(),
+                  BookCard(),
+                  BookCard(),
+                  BookCard(),
+                  BookCard(),
+                  BookCard(),
+                  BookCard(),
+                  BookCard(),
+                  BookCard(),
+                  BookCard(),
+                  BookCard(),
+                  BookCard(),
+                  BookCard(),
+                  BookCard(),
+                  BookCard(),
+                  BookCard(),
+                  BookCard(),
+                  BookCard(),
+                  BookCard(),
+                  BookCard(),
+                  BookCard(),
+                  BookCard(),
+                  BookCard(),
+                  BookCard(),
+                  BookCard(),
+                  BookCard(),
+                  BookCard(),
+                  BookCard(),
+                  BookCard(),
+                  BookCard(),
+                ],
+              ),
             ),
-          ),
+            Container(
+                margin: const EdgeInsets.symmetric(horizontal: 20),
+                child: SmoothPageIndicator(
+                  controller: pgcontroller,
+                  count: 50,
+                  effect: const ExpandingDotsEffect(
+                    activeDotColor: Colors.blue,
+                  ),
+                )
+                ),
+          ],
         ),
       ),
     );
