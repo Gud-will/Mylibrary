@@ -1,15 +1,22 @@
+import 'package:carousel_slider/carousel_slider.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:mylibrary/api/apiget.dart';
+import 'package:mylibrary/screens/search_page.dart';
 import 'package:mylibrary/ui/bookcard.dart';
 import 'package:mylibrary/ui/uicolors.dart';
-import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
-void main() {
-  runApp(const MyApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
-
+  MyApp({Key? key}) : super(key: key);
+  final User? user = FirebaseAuth.instance.currentUser;
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
@@ -18,7 +25,58 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(),
+      home: user != null ? const MyHomePage() : LoginPage(),
+    );
+  }
+}
+
+class LoginPage extends StatelessWidget {
+  LoginPage({Key? key}) : super(key: key);
+
+  Future<UserCredential> signInWithGoogle() async {
+    // Trigger the authentication flow
+    final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+
+    // Obtain the auth details from the request
+    final GoogleSignInAuthentication? googleAuth =
+        await googleUser?.authentication;
+
+    // Create a new credential
+    final credential = GoogleAuthProvider.credential(
+      accessToken: googleAuth?.accessToken,
+      idToken: googleAuth?.idToken,
+    );
+
+    // Once signed in, return the UserCredential
+    return await FirebaseAuth.instance.signInWithCredential(credential);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.transparent,
+      body: Container(
+        width: MediaQuery.of(context).size.width,
+        padding: const EdgeInsets.only(top: 10, bottom: 20),
+        height: MediaQuery.of(context).size.height,
+        decoration: bgcolor,
+        child: Align(
+          alignment: Alignment.center,
+          child: InkWell(
+            onTap: () {
+              signInWithGoogle();
+            },
+            child: Container(
+              decoration: const BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage(
+                      "assets/btn_google_signin_dark_pressed_web.png"),
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
     );
   }
 }
@@ -31,96 +89,101 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  final PageController pgcontroller = PageController(viewportFraction: 0.8);
-  int selectedPg = 0;
-
+  FocusNode searchbar = FocusNode();
+  var change=false;
+  List<BookData> books=[];
+  TextEditingController _searchcontroller = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      extendBody: true,
+      resizeToAvoidBottomInset: false,
       backgroundColor: Colors.transparent,
       body: Container(
+        padding: const EdgeInsets.only(top: 50, left: 10, right: 10),
         width: MediaQuery.of(context).size.width,
-        padding: const EdgeInsets.only(top: 10, bottom: 20),
         height: MediaQuery.of(context).size.height,
         decoration: bgcolor,
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.end,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            SizedBox(
-              width: MediaQuery.of(context).size.width,
-              height: 600,
-              child: PageView(
-                pageSnapping: false,
-                controller: pgcontroller,
-                children: [
-                  BookCard(),
-                  BookCard(),
-                  BookCard(),
-                  BookCard(),
-                  BookCard(),
-                  BookCard(),
-                  BookCard(),
-                  BookCard(),
-                  BookCard(),
-                  BookCard(),
-                  BookCard(),
-                  BookCard(),
-                  BookCard(),
-                  BookCard(),
-                  BookCard(),
-                  BookCard(),
-                  BookCard(),
-                  BookCard(),
-                  BookCard(),
-                  BookCard(),
-                  BookCard(),
-                  BookCard(),
-                  BookCard(),
-                  BookCard(),
-                  BookCard(),
-                  BookCard(),
-                  BookCard(),
-                  BookCard(),
-                  BookCard(),
-                  BookCard(),
-                  BookCard(),
-                  BookCard(),
-                  BookCard(),
-                  BookCard(),
-                  BookCard(),
-                  BookCard(),
-                  BookCard(),
-                  BookCard(),
-                  BookCard(),
-                  BookCard(),
-                  BookCard(),
-                  BookCard(),
-                  BookCard(),
-                  BookCard(),
-                  BookCard(),
-                  BookCard(),
-                  BookCard(),
-                  BookCard(),
-                  BookCard(),
-                  BookCard(),
-                  BookCard(),
-                  BookCard(),
-                  BookCard(),
-                  BookCard(),
-                ],
+            SearchBar(
+              hintText: "Enter Book name here",
+              controller: _searchcontroller,
+              onChanged: (value) async{
+                books=await APIService().get();
+                setState(() {
+                  change=true;
+                });
+              },
+            ),
+            change?Expanded(child:SearchList(books:books)):CarouselSlider(
+              items: const [
+                BookCard(),
+                BookCard(),
+                BookCard(),
+                BookCard(),
+                BookCard(),
+                BookCard(),
+                BookCard(),
+                BookCard(),
+                BookCard(),
+                BookCard(),
+                BookCard(),
+                BookCard(),
+                BookCard(),
+                BookCard(),
+                BookCard(),
+                BookCard(),
+                BookCard(),
+                BookCard(),
+                BookCard(),
+                BookCard(),
+                BookCard(),
+                BookCard(),
+                BookCard(),
+                BookCard(),
+                BookCard(),
+                BookCard(),
+                BookCard(),
+                BookCard(),
+                BookCard(),
+                BookCard(),
+                BookCard(),
+                BookCard(),
+                BookCard(),
+                BookCard(),
+                BookCard(),
+                BookCard(),
+                BookCard(),
+                BookCard(),
+                BookCard(),
+                BookCard(),
+                BookCard(),
+                BookCard(),
+                BookCard(),
+                BookCard(),
+                BookCard(),
+                BookCard(),
+                BookCard(),
+                BookCard(),
+                BookCard(),
+                BookCard(),
+                BookCard(),
+                BookCard(),
+                BookCard(),
+                BookCard(),
+              ],
+              options: CarouselOptions(
+                height: 600,
+                enlargeCenterPage: true,
+                autoPlay: true,
+                aspectRatio: 16 / 9,
+                autoPlayCurve: Curves.fastOutSlowIn,
+                enableInfiniteScroll: true,
+                autoPlayAnimationDuration: const Duration(milliseconds: 800),
+                viewportFraction: 0.9,
               ),
             ),
-            Container(
-                margin: const EdgeInsets.symmetric(horizontal: 20),
-                child: SmoothPageIndicator(
-                  controller: pgcontroller,
-                  count: 50,
-                  effect: const ExpandingDotsEffect(
-                    activeDotColor: Colors.blue,
-                  ),
-                )
-                ),
           ],
         ),
       ),

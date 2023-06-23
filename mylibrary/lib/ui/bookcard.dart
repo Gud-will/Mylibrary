@@ -12,19 +12,15 @@ class BookCard extends StatefulWidget {
 class _BookCardState extends State<BookCard> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 25),
+    return SizedBox(
       width: MediaQuery.of(context).size.width,
       height: 600,
-      child: Align(
-        alignment: Alignment.bottomCenter,
-        child: Stack(
+      child: const Stack(
           alignment: AlignmentDirectional.topCenter,
-          children: const [
+          children: [
             BookInfoCard(),
             Imageholder(),
           ],
-        ),
       ),
     );
   }

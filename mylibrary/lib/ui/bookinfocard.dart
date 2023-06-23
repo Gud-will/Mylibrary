@@ -9,7 +9,7 @@ class BookInfoCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: 400,
-      height: 500,
+      height: 400,
       margin: const EdgeInsets.only(top: 130),
       padding: const EdgeInsets.only(
         top: 130,

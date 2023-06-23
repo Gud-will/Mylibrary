@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "747658470047",
+    "project_id": "bookdom-eaf9c",
+    "storage_bucket": "bookdom-eaf9c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:747658470047:android:23d4e513c800a376e2f8aa",
+        "android_client_info": {
+          "package_name": "com.gudwill.bookdom"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "747658470047-fc1bj572uj9aga2cqnh6vsfjg3v9tatt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAYSBha0MXhU7J-YHkFr2efrNTwSZ0PBUs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "747658470047-233graa157ims90qsumpqf79jj57taco.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
