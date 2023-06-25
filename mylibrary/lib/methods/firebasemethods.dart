@@ -33,7 +33,6 @@ Future<BookData> getbook(String id) async {
     return snapshot.data()!;
   });
   book = BookData.fromJsonfirebase(doc);
-  debugPrint(book.toString());
   return book;
 }
 

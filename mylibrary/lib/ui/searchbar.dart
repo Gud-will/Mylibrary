@@ -31,15 +31,17 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
           onSubmitted: (value) async {
             bookslist =
                 await APIService().get(_controller.text.replaceAll(" ", "+"));
+                
             setState(() {
               Navigator.of(context).push(
                 MaterialPageRoute(
                   builder: (context) => SearchList(books: bookslist,user: widget.user,setstate: widget.statefunc,searchvalue: _controller.text,),
                 ),
               );
+              _controller.clear();
             });
           },
-          decoration: const InputDecoration(hintText: "Enter book title here"),
+          decoration: const InputDecoration(hintText: "Enter book title here",),
         ),
       ),
     );

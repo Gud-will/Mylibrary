@@ -5,7 +5,7 @@ import 'package:mylibrary/screens/home_page.dart';
 import 'package:mylibrary/ui/uicolors.dart';
 
 class LoginPage extends StatelessWidget {
-  LoginPage({Key? key}) : super(key: key);
+  const LoginPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +25,7 @@ class LoginPage extends StatelessWidget {
               aspectRatio: 16 / 10,
               child: Image.asset("assets/6538623-removebg-preview.png"),
             ),
-            const Text("Login"),
+            Text("Login",style:Theme.of(context).textTheme.headlineSmall),
             const SizedBox(
               height: 40,
             ),

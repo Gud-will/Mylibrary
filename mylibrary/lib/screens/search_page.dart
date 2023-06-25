@@ -9,7 +9,13 @@ class SearchList extends StatelessWidget {
   final User? user;
   final String searchvalue;
   final Function setstate;
-  const SearchList({Key? key, required this.books,required this.user,required this.setstate,required this.searchvalue}) : super(key: key);
+  const SearchList(
+      {Key? key,
+      required this.books,
+      required this.user,
+      required this.setstate,
+      required this.searchvalue})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -26,8 +32,12 @@ class SearchList extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 10,vertical: 10),
-                child: Text("Search Results for "+searchvalue,style: Theme.of(context).textTheme.headlineMedium,),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                child: Text(
+                  "Search Results for " + searchvalue,
+                  style: Theme.of(context).textTheme.headlineMedium,
+                ),
               ),
               Expanded(
                 child: ListView.builder(
@@ -46,7 +56,7 @@ class SearchList extends StatelessWidget {
                       subtitle: Text(author),
                       trailing: IconButton(
                         onPressed: () {
-                          addbookToUser(user!.uid,books[index]);
+                          addbookToUser(user!.uid, books[index]);
                           setstate();
                           Navigator.of(context).pop();
                         },

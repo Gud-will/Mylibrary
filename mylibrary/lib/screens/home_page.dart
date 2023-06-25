@@ -4,7 +4,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:mylibrary/api/apiget.dart';
 import 'package:mylibrary/methods/firebasemethods.dart';
+import 'package:mylibrary/ui/appbar.dart';
 import 'package:mylibrary/ui/bookcard.dart';
+import 'package:mylibrary/ui/drawer.dart';
 import 'package:mylibrary/ui/searchbar.dart';
 import 'package:mylibrary/ui/uicolors.dart';
 
@@ -22,10 +24,9 @@ class _MyHomePageState extends State<MyHomePage> {
     setState(() {});
   }
 
-  Future<List<BookData>> getbookdetails(
-      List<dynamic> doc) async {
+  Future<List<BookData>> getbookdetails(List<dynamic> doc) async {
     List<BookData> bookslist = [];
-    List<String> bookids = doc.map((item) => item as String ).toList();
+    List<String> bookids = doc.map((item) => item as String).toList();
     for (var i = 0; i < bookids.length; i++) {
       bookslist.add(await getbook(bookids[i]));
     }
@@ -34,86 +35,77 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
     return SafeArea(
       child: Scaffold(
+        key: _scaffoldKey,
         resizeToAvoidBottomInset: false,
-        appBar: AppBar(
-          leading: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: CircleAvatar(
-              backgroundImage: NetworkImage(widget.user!.photoURL ?? ""),
-            ),
-          ),
-          title: Text(widget.user!.displayName ?? ""),
-        ),
+        drawer: DrawerWidget(user: widget.user!),
+        appBar: appbarwidget(_scaffoldKey, widget.user!),
         backgroundColor: Colors.transparent,
         body: Container(
-          padding: const EdgeInsets.only(top: 50, left: 10, right: 10),
+          padding: const EdgeInsets.only(top:50, left: 10, right: 10),
           width: MediaQuery.of(context).size.width,
           height: MediaQuery.of(context).size.height,
           decoration: bgcolor,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Hero(
-                tag: "searchBar",
-                child: SearchBarWidget(
-                  user: widget.user,
-                  statefunc: changestate,
-                ),
-              ),
-              StreamBuilder<DocumentSnapshot<Map<String, dynamic>>>(
-                  stream: FirebaseFirestore.instance
-                      .collection("Users")
-                      .doc(widget.user!.uid).snapshots(),
-                  //future: getuserbooks(widget.user!.uid),
-                  builder: (BuildContext context,
-                      AsyncSnapshot<DocumentSnapshot<Map<String, dynamic>>> snapshot) {
-                    if (snapshot.hasData && !snapshot.hasError) {
-                      debugPrint("snapppppp"+snapshot.data!['books'].toString());
-                      // debugPrint("snapshot.data" +
-                      //     (snapshot.data as List<BookData>).toString());
-                      return FutureBuilder(
-                        future: getbookdetails(snapshot.data!['books']),
-                        builder: (context, futuresnap) {
-                          if (futuresnap.hasData && !futuresnap.hasError) {
-                            List<BookData> bookslist =
-                          (futuresnap.data as List<BookData>);
-                            return CarouselSlider.builder(
-                              itemCount:
-                                  bookslist.length,
+          child: StreamBuilder<DocumentSnapshot<Map<String, dynamic>>>(
+              stream: FirebaseFirestore.instance
+                  .collection("Users")
+                  .doc(widget.user!.uid)
+                  .snapshots(),
+              builder: (BuildContext context,
+                  AsyncSnapshot<DocumentSnapshot<Map<String, dynamic>>>
+                      snapshot) {
+                if (snapshot.hasData && !snapshot.hasError) {
+                  return FutureBuilder(
+                    future: getbookdetails(snapshot.data!['books']),
+                    builder: (context, futuresnap) {
+                      if (futuresnap.hasData && !futuresnap.hasError) {
+                        List<BookData> bookslist =
+                            (futuresnap.data as List<BookData>);
+                        return Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            SearchBarWidget(
+                              user: widget.user,
+                              statefunc: changestate,
+                            ),
+                            CarouselSlider.builder(
+                              itemCount: bookslist.length,
                               itemBuilder: (context, index, page) {
                                 return BookCard(book: bookslist[index]);
                               },
-                              options: CarouselOptions(
-                                height: 600,
-                                enlargeCenterPage: true,
-                                aspectRatio: 16 / 9,
-                                autoPlayCurve: Curves.fastOutSlowIn,
-                                enableInfiniteScroll: true,
-                                autoPlayAnimationDuration:
-                                    const Duration(milliseconds: 800),
-                                viewportFraction: 0.9,
-                              ),
-                            );
-                          } else if (futuresnap.hasError) {
-                            debugPrint("error" + snapshot.error.toString());
-                            return const Text(
-                                "Error in Loading data from fireStore in future");
-                          } else {
-                            return const CircularProgressIndicator();
-                          }
-                        },
-                      );
-                    } else if (snapshot.hasError) {
-                      debugPrint("error" + snapshot.error.toString());
-                      return const Text("Error in Loading data from fireStore in streambuilder");
-                    } else {
-                      return const CircularProgressIndicator();
-                    }
-                  }),
-            ],
-          ),
+                              options: carouselOptions,
+                            ),
+                          ],
+                        );
+                      } else if (futuresnap.hasError) {
+                        debugPrint("error" + snapshot.error.toString());
+                        return const Text(
+                            "Error in Loading data from fireStore in future");
+                      } else {
+                        return const SizedBox(
+                          child: Center(child: CircularProgressIndicator()),
+                          height: 200.0,
+                          width: 200.0,
+                        );
+                      }
+                    },
+                  );
+                } else if (snapshot.hasError) {
+                  debugPrint("error" + snapshot.error.toString());
+                  return const Center(
+                    child: Text(
+                        "Error in Loading data from fireStore in streambuilder"),
+                  );
+                } else {
+                  return const SizedBox(
+                    child: Center(child: CircularProgressIndicator()),
+                    height: 200.0,
+                    width: 200.0,
+                  );
+                }
+              }),
         ),
       ),
     );
