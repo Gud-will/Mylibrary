@@ -34,7 +34,7 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
             setState(() {
               Navigator.of(context).push(
                 MaterialPageRoute(
-                  builder: (context) => SearchList(books: bookslist,user: widget.user,setstate: widget.statefunc,),
+                  builder: (context) => SearchList(books: bookslist,user: widget.user,setstate: widget.statefunc,searchvalue: _controller.text,),
                 ),
               );
             });

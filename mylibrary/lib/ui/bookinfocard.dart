@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:mylibrary/ui/textboxwithplaceholder.dart';
 import 'package:mylibrary/ui/uicolors.dart';
 
 class BookInfoCard extends StatelessWidget {
@@ -27,7 +26,7 @@ class BookInfoCard extends StatelessWidget {
       child: Container(
         margin: const EdgeInsets.only(top: 130),
         padding: const EdgeInsets.only(
-          top: 130,
+          top: 100,
           bottom: 10,
           right: 10,
           left: 10,
@@ -37,23 +36,64 @@ class BookInfoCard extends StatelessWidget {
           maxHeight: 700,
         ),
         decoration: cardDecorations,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            TextBoxWthPlaceHolder(
-              placeholder: "Title",
-              placeholdervalue: title,
-            ),
-            TextBoxWthPlaceHolder(
-              placeholder: "Authors:",
-              placeholdervalue: author,
-            ),
-            TextBoxWthPlaceHolder(
-              placeholder: "summary",
-              placeholdervalue: summary,
-            ),
-          ],
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 10),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Flexible(
+                flex: 2,
+                fit: FlexFit.loose,
+                child: Text(
+                  title,
+                  style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                  maxLines: 2,
+                  textScaleFactor: 1.7,
+                  textAlign: TextAlign.center,
+                ),
+              ),
+              const SizedBox(
+                height: 9,
+              ),
+              Flexible(
+                fit: FlexFit.tight,
+                flex: 1,
+                child: Text(
+                  author,
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyMedium!
+                      .copyWith(overflow: TextOverflow.ellipsis),
+                  maxLines: 2,
+                  textAlign: TextAlign.center,
+                  textScaleFactor: 1.5,
+                ),
+              ),
+              const SizedBox(
+                height: 5,
+              ),
+              Flexible(
+                fit: FlexFit.loose,
+                flex: 2,
+                child: Text(
+                  summary,
+                  textAlign: TextAlign.center,
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodySmall!
+                      .copyWith(overflow: TextOverflow.ellipsis),
+                  maxLines: 8,
+                  textScaleFactor: 1.4,
+                ),
+              ),
+              const SizedBox(
+                height: 5,
+              ),
+            ],
+          ),
         ),
       ),
     );
