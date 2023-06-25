@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 class TextBoxWthPlaceHolder extends StatelessWidget {
-  String placeholder, placeholdervalue;
-  TextBoxWthPlaceHolder(
+  final String placeholder, placeholdervalue;
+  const TextBoxWthPlaceHolder(
       {Key? key, required this.placeholder, required this.placeholdervalue})
       : super(key: key);
 
