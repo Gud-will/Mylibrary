@@ -7,10 +7,10 @@ During my stay in a hostel, I fell in love with reading novels and I used to kee
 I wanted to have a digital copy that I can carry anywhere.
 
 ## The app
-![Screenshot_20230626-182844](https://github.com/Gud-will/Mylibrary/assets/81401804/396d0d7a-2481-4329-815f-73108c1420e9 "Login Page")
-![Screenshot_20230626-182754](https://github.com/Gud-will/Mylibrary/assets/81401804/79bcd194-7d3a-4c1d-a0c3-737b2bd9b0be "Home Page")
-![Screenshot_20230626-182837](https://github.com/Gud-will/Mylibrary/assets/81401804/3f6e388a-b037-4983-ac8f-aaae38ca3b78 "App Drawer")
-![Screenshot_20230626-182818](https://github.com/Gud-will/Mylibrary/assets/81401804/681d5f08-fb03-48e8-a8d8-7fb1e044acf7 "Search Page")
+![Screenshot_20230626-182844](mylibrary/assets/Screenshot_20230626-182844.jpg "Login Page")
+![Screenshot_20230626-182754](mylibrary/assets/Screenshot_20230626-182754.jpg "Home Page")
+![Screenshot_20230626-182837](mylibrary/assets/Screenshot_20230626-182837.jpg "App Drawer")
+![Screenshot_20230626-182818](mylibrary/assets/Screenshot_20230626-182818.jpg "Search Page")
 
 
 
