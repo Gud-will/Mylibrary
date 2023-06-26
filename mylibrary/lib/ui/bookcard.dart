@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:mylibrary/api/apiget.dart';
 import 'package:mylibrary/ui/bookinfocard.dart';
 import 'package:mylibrary/ui/imageholder.dart';
 
 class BookCard extends StatefulWidget {
-  const BookCard({Key? key}) : super(key: key);
+  final BookData book;
+  const BookCard({Key? key,required this.book}) : super(key: key);
 
   @override
   State<BookCard> createState() => _BookCardState();
@@ -12,15 +14,14 @@ class BookCard extends StatefulWidget {
 class _BookCardState extends State<BookCard> {
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: MediaQuery.of(context).size.width,
-      height: 600,
-      child: const Stack(
-          alignment: AlignmentDirectional.topCenter,
-          children: [
-            BookInfoCard(),
-            Imageholder(),
-          ],
+    return AspectRatio(
+      aspectRatio: 9 / 16,
+      child: Stack(
+        alignment: AlignmentDirectional.topCenter,
+        children: [
+          BookInfoCard(title: widget.book.title,authorNames: widget.book.authors!,summary: widget.book.summary,),
+          Imageholder(imageUrl:widget.book.imageUrl),
+        ],
       ),
     );
   }
