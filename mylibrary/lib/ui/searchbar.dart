@@ -14,7 +14,7 @@ class SearchBarWidget extends StatefulWidget {
 
 class _SearchBarWidgetState extends State<SearchBarWidget> {
   List<BookData> bookslist = [];
-  TextEditingController _controller = TextEditingController();
+  final TextEditingController _controller = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -31,11 +31,11 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
           onSubmitted: (value) async {
             bookslist =
                 await APIService().get(_controller.text.replaceAll(" ", "+"));
-                
+            var text=_controller.text;
             setState(() {
               Navigator.of(context).push(
                 MaterialPageRoute(
-                  builder: (context) => SearchList(books: bookslist,user: widget.user,setstate: widget.statefunc,searchvalue: _controller.text,),
+                  builder: (context) => SearchList(books: bookslist,user: widget.user,setstate: widget.statefunc,searchvalue:text,),
                 ),
               );
               _controller.clear();

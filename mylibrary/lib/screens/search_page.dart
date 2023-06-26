@@ -22,6 +22,9 @@ class SearchList extends StatelessWidget {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: Colors.transparent,
+      appBar: AppBar(
+        title: Text(user!.displayName!),
+      ),
       body: SafeArea(
         child: Container(
           padding: const EdgeInsets.only(left: 10, right: 10),
@@ -36,6 +39,8 @@ class SearchList extends StatelessWidget {
                     const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                 child: Text(
                   "Search Results for " + searchvalue,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
                   style: Theme.of(context).textTheme.headlineMedium,
                 ),
               ),
